@@ -42,7 +42,8 @@
     "uuid": "3.3.2",
     "winston": "3.2.1",
     "winston-daily-rotate-file": "3.9.0",
-    "ws": "7.0.0"
+    "ws": "7.0.0",
+    "snyk": "^1.230.5"
   },
   "devDependencies": {
     "@babel/cli": "7.4.4",
@@ -80,8 +81,9 @@
     "test": "cross-env MONGODB_VERSION=${MONGODB_VERSION:=4.0.4} MONGODB_STORAGE_ENGINE=mmapv1 TESTING=1 jasmine",
     "coverage": "cross-env MONGODB_VERSION=${MONGODB_VERSION:=4.0.4} MONGODB_STORAGE_ENGINE=mmapv1 TESTING=1 nyc jasmine",
     "start": "node ./bin/parse-server",
-    "prepare": "npm run build",
-    "postinstall": "node -p 'require(\"./postinstall.js\")()'"
+    "prepare": "npm run snyk-protect && npm run build",
+    "postinstall": "node -p 'require(\"./postinstall.js\")()'",
+    "snyk-protect": "snyk protect"
   },
   "engines": {
     "node": ">= 8"
@@ -109,5 +111,6 @@
       "eslint --cache",
       "git add"
     ]
-  }
+  },
+  "snyk": true
 }
